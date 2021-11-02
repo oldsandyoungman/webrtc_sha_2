@@ -33,29 +33,44 @@ io.sockets.on('connection', (socket)=>{
 	
 	socket.on('join', (room)=>{
 		socket.join(room);
-		var myroom = io.sockets.adapter.rooms[room];
+
+		var myRoom = io.sockets.adapter.rooms[room];
 		
-		var users = Objects.keys(myRoom.sockets).length;
+		var users = Object.keys(myRoom.sockets).length;
 
-		//io.in(room).emit('joined', room, socket.id);
+		io.in(room).emit('joined', room, socket.id);
 
-		socket.broadcast.emit('joined', room, socket.id);
+		//socket.broadcast.emit('joined', room, socket.id);
 
+		console.log('joined sha');
 		
 	});	
 
-	socket.on('leave', (room)=>{
+	socket.on('leave', (room, id)=>{
 		var myroom = io.sockets.adapter.rooms[room];
 		var users = Objects.keys(myRoom.sockets).length;
 		
 
 		socket.leave(room);
-		//io.in(room).emit('joined', room, socket.id);
+		io.in(room).emit('leaved', room, socket.id);
 
-		socket.broadcast.emit('leaved', room, socket.id);
+		//socket.broadcast.emit('leaved', room, socket.id);
 
 		
 	});
+
+	socket.on('message', (room, data)=>{
+		//var myroom = io.sockets.adapter.rooms[room];
+
+		io.in(room).emit('message', room, data);
+
+		//socket.broadcast.emit('message', room, data);
+
+		console.log(data);
+
+		
+	});
+
 
 
 
