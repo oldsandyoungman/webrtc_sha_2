@@ -46,14 +46,13 @@ io.sockets.on('connection', (socket)=>{
 		
 	});	
 
-	socket.on('leave', (room, id)=>{
-		var myroom = io.sockets.adapter.rooms[room];
-		var users = Objects.keys(myRoom.sockets).length;
+	socket.on('leave', (room)=>{
+		var myRoom = io.sockets.adapter.rooms[room];
+		//var users = Object.keys(myRoom.sockets).length;
 		
-
 		socket.leave(room);
-		io.in(room).emit('leaved', room, socket.id);
-
+		//io.in(room).emit('leaved', room, socket.id);
+		socket.emit('leaved', room, socket.id);
 		//socket.broadcast.emit('leaved', room, socket.id);
 
 		

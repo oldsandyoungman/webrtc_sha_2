@@ -3,6 +3,7 @@
 var userName = document.querySelector('input#username');
 var inputRoom = document.querySelector('input#room');
 var btnConnect = document.querySelector('button#connect');
+var btnLeave = document.querySelector('button#leave');
 var outputArea = document.querySelector('textarea#output');
 var inputArea = document.querySelector('textarea#input');
 var btnSend = document.querySelector('button#send');
@@ -20,6 +21,7 @@ btnConnect.onclick = ()=>{
 		btnConnect.disabled = true;
 		inputArea.disabled = false;
 		btnSend.disabled = false;
+		btnLeave.disabled = false;
 
 
 	});	
@@ -30,6 +32,9 @@ btnConnect.onclick = ()=>{
 		btnConnect.disabled = false;
 		inputArea.disabled = true;
 		btnSend.disabled = true;
+		btnLeave.disabled = true;
+
+		socket.disconnect();
 
 
 	});
@@ -61,6 +66,15 @@ btnSend.onclick = ()=>{
 
 }
 
+
+
+btnLeave.onclick = ()=>{
+
+	room = inputRoom.value;
+
+	socket.emit('leave', room);
+
+}
 
 
 
