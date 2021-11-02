@@ -27,18 +27,18 @@ var options = {
 
 
 var https_server = https.createServer(options, app);
-var io = socketIo.listen(https_server);
+var io_sha = socketIo.listen(https_server);
 
-io.sockets.on('connection', (socket)=>{
+io_sha.sockets.on('connection', (socket)=>{
 	
 	socket.on('join', (room)=>{
 		socket.join(room);
 
-		var myRoom = io.sockets.adapter.rooms[room];
+		var myRoom = io_sha.sockets.adapter.rooms[room];
 		
 		var users = Object.keys(myRoom.sockets).length;
 
-		io.in(room).emit('joined', room, socket.id);
+		io_sha.in(room).emit('joined', room, socket.id);
 
 		//socket.broadcast.emit('joined', room, socket.id);
 
@@ -47,7 +47,7 @@ io.sockets.on('connection', (socket)=>{
 	});	
 
 	socket.on('leave', (room)=>{
-		var myRoom = io.sockets.adapter.rooms[room];
+		var myRoom = io_sha.sockets.adapter.rooms[room];
 		//var users = Object.keys(myRoom.sockets).length;
 		
 		socket.leave(room);
@@ -61,7 +61,7 @@ io.sockets.on('connection', (socket)=>{
 	socket.on('message', (room, data)=>{
 		//var myroom = io.sockets.adapter.rooms[room];
 
-		io.in(room).emit('message', room, data);
+		io_sha.in(room).emit('message', room, data);
 
 		//socket.broadcast.emit('message', room, data);
 
