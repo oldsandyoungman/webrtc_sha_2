@@ -5,10 +5,24 @@
  *  that can be found in the LICENSE file in the root of the source
  *  tree.
  */
+
 button {
-  margin: 0 20px 25px 0;
+  margin: 10px 20px 25px 0;
   vertical-align: top;
   width: 134px;
+}
+
+table {
+  margin: 200px (50% - 100) 0 0; 
+}
+
+textarea {
+  color: #444;
+  font-size: 0.9em;
+  font-weight: 300;
+  height: 20.0em;
+  padding: 5px;
+  width: calc(100% - 10px);
 }
 
 div#getUserMedia {
@@ -39,6 +53,18 @@ div.output {
   width: 270px;
 }
 
+div#preview {
+  border-bottom: 1px solid #eee;
+  margin: 0 0 1em 0;
+  padding: 0 0 0.5em 0;
+}
+
+div#preview > div {
+  display: inline-block;
+  vertical-align: top;
+  width: calc(50% - 12px);
+}
+
 section#statistics div {
   display: inline-block;
   font-family: 'Inconsolata', 'Courier New', monospace;
@@ -58,6 +84,7 @@ h2 {
   margin: 0 0 1em 0;
 }
 
+
 section#constraints label {
   display: inline-block;
   width: 156px;
@@ -71,9 +98,9 @@ section {
 video {
   background: #222;
   margin: 0 0 0 0;
-  --width: 45%;
+  --width: 100%;
   width: var(--width);
-  height: var(--width);
+  height: 225px;
 }
 
 @media screen and (max-width: 720px) {

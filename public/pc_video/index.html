@@ -1,21 +1,27 @@
 <html>
 	<head>
-		<title>RTCPeerConnection</title>
-		<link rel="stylesheet" href="css/main.css"/>
+		<title>really peer connection</title>
+		<link rel="stylesheet" href="./css/main.css">
+		<script language="javascript" type="text/javascript">
+			function gotoNextPage(){
+				var roomid = document.querySelector('input#room');
+				if(roomid.value === null || roomid.value === ''){
+					alert('roomid is null');
+				}else {
+					window.location.href="room.html?room="+ roomid.value;
+				}
+			}
+		</script>
 	</head>
 	<body>
-		<div>
-			<video id="localVideo" autoplay playsinline></video>
-			<video id="remoteVideo" autoplay playsinline></video>
-			<div>
-				<button id="start">start</button>
-				<button id="call">call</button>
-				<button id="hangup">hang up</button>
-			</div>
-		</div>
-
-		<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-		<script src="./js/main.js"></script>
-
+		<table align="center">
+			<tr><td><div>
+					<label>roomid:</label>
+					<input type="input" id="room">
+			</div></td></tr>
+			<tr><td><div>
+						<button id="join" onclick="gotoNextPage()">Join</button>
+			</div></td></tr>
+		</table>
 	</body>
 </html>

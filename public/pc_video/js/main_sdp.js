@@ -6,16 +6,11 @@ var remoteVideo = document.querySelector('video#remotevideo');
 var btnConn =  document.querySelector('button#connserver');
 var btnLeave = document.querySelector('button#leave');
 
-var offer = document.querySelector('textarea#offer');
-var answer = document.querySelector('textarea#answer');
-
-var shareDeskBox  = document.querySelector('input#shareDesk');
-
 var pcConfig = {
   'iceServers': [{
-    'urls': 'turn:rustling.xyz:3478',
-    'credential': "Shage@119cloud",
-    'username': "ubuntu"
+    'urls': 'turn:stun.al.learningrtc.cn:3478',
+    'credential': "mypasswd",
+    'username': "garrylea"
   }]
 };
 
@@ -30,63 +25,6 @@ var socket = null;
 var offerdesc = null;
 var state = 'init';
 
-// 以下代码是从网上找的
-//=========================================================================================
-
-//如果返回的是false说明当前操作系统是手机端，如果返回的是true则说明当前的操作系统是电脑端
-function IsPC() {
-	var userAgentInfo = navigator.userAgent;
-	var Agents = ["Android", "iPhone","SymbianOS", "Windows Phone","iPad", "iPod"];
-	var flag = true;
-
-	for (var v = 0; v < Agents.length; v++) {
-		if (userAgentInfo.indexOf(Agents[v]) > 0) {
-			flag = false;
-			break;
-		}
-	}
-
-	return flag;
-}
-
-//如果返回true 则说明是Android  false是ios
-function is_android() {
-	var u = navigator.userAgent, app = navigator.appVersion;
-	var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
-	var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-	if (isAndroid) {
-		//这个是安卓操作系统
-		return true;
-	}
-
-	if (isIOS) {
-      　　//这个是ios操作系统
-     　　 return false;
-	}
-}
-
-//获取url参数
-function getQueryVariable(variable)
-{
-       var query = window.location.search.substring(1);
-       var vars = query.split("&");
-       for (var i=0;i<vars.length;i++) {
-               var pair = vars[i].split("=");
-               if(pair[0] == variable){return pair[1];}
-       }
-       return(false);
-}
-
-//=======================================================================
-
-function sendMessage(roomid, data){
-
-	console.log('send message to other end', roomid, data);
-	if(!socket){
-		console.log('socket is null');
-	}
-	socket.emit('message', roomid, data);
-}
 
 function conn(){
 
@@ -96,13 +34,7 @@ function conn(){
 		console.log('receive joined message!', roomid, id);
 		state = 'joined'
 
-		//如果是多人的话，第一个人不该在这里创建peerConnection
-		//都等到收到一个otherjoin时再创建
-		//所以，在这个消息里应该带当前房间的用户数
-		//
-		//create conn and bind media track
 		createPeerConnection();
-		bindTracks();
 
 		btnConn.disabled = true;
 		btnLeave.disabled = false;
@@ -112,11 +44,8 @@ function conn(){
 	socket.on('otherjoin', (roomid) => {
 		console.log('receive joined message:', roomid, state);
 
-		//如果是多人的话，每上来一个人都要创建一个新的 peerConnection
-		//
 		if(state === 'joined_unbind'){
 			createPeerConnection();
-			bindTracks();
 		}
 
 		state = 'joined_conn';
@@ -127,8 +56,6 @@ function conn(){
 
 	socket.on('full', (roomid, id) => {
 		console.log('receive full message', roomid, id);
-		hangup();
-		closeLocalMedia();
 		state = 'leaved';
 		console.log('receive full message, state=', state);
 		alert('the room is full!');
@@ -146,28 +73,16 @@ function conn(){
 
 	socket.on('bye', (room, id) => {
 		console.log('receive bye message', roomid, id);
-		//state = 'created';
-		//当是多人通话时，应该带上当前房间的用户数
-		//如果当前房间用户不小于 2, 则不用修改状态
-		//并且，关闭的应该是对应用户的peerconnection
-		//在客户端应该维护一张peerconnection表，它是
-		//一个key:value的格式，key=userid, value=peerconnection
 		state = 'joined_unbind';
 		hangup();
-		offer.value = '';
-		answer.value = '';
 		console.log('receive bye message, state=', state);
 	});
 
 	socket.on('disconnect', (socket) => {
 		console.log('receive disconnect message!', roomid);
-		if(!(state === 'leaved')){
-			hangup();
-			closeLocalMedia();
-
-		}
 		state = 'leaved';
 	
+		console.log('receive disconnect message, state=', state);
 	});
 
 	socket.on('message', (roomid, data) => {
@@ -179,11 +94,8 @@ function conn(){
 		}
 
 		if(data.hasOwnProperty('type') && data.type === 'offer') {
-			
-			offer.value = data.sdp;
 
 			pc.setRemoteDescription(new RTCSessionDescription(data));
-
 			//create answer
 			pc.createAnswer()
 				.then(getAnswer)
@@ -224,49 +136,19 @@ function connSignalServer(){
 
 function getMediaStream(stream){
 
-	if(localStream){
-		stream.getAudioTracks().forEach((track)=>{
-			localStream.addTrack(track);	
-			stream.removeTrack(track);
-		});
-	}else{
-		localStream = stream;	
-	}
-
+	localStream = stream;	
 	localVideo.srcObject = localStream;
 
-	//这个函数的位置特别重要，
-	//一定要放到getMediaStream之后再调用
-	//否则就会出现绑定失败的情况
-	//
 	//setup connection
 	conn();
-
-	//btnStart.disabled = true;
-	//btnCall.disabled = true;
-	//btnHangup.disabled = true;
-}
-
-function getDeskStream(stream){
-	localStream = stream;
 }
 
 function handleError(err){
-	console.error('Failed to get Media Stream!', err);
-}
-
-function shareDesk(){
-
-	if(IsPC()){
-		navigator.mediaDevices.getDisplayMedia({video: true})
-			.then(getDeskStream)
-			.catch(handleError);
-
-		return true;
+	if(err){
+		console.error('Failed to get Media Stream!', err);	
+	}else {
+		console.error('Failed to get Media Stream!');
 	}
-
-	return false;
-
 }
 
 function start(){
@@ -277,28 +159,9 @@ function start(){
 		return;
 	}else {
 
-		var constraints;
-
-		if( shareDeskBox.checked && shareDesk()){
-
-			constraints = {
-				video: false,
-				audio:  {
-					echoCancellation: true,
-					noiseSuppression: true,
-					autoGainControl: true
-				}
-			}
-
-		}else{
-			constraints = {
-				video: true,
-				audio:  {
-					echoCancellation: true,
-					noiseSuppression: true,
-					autoGainControl: true
-				}
-			}
+		var constraints = {
+			video: true,
+			audio: false
 		}
 
 		navigator.mediaDevices.getUserMedia(constraints)
@@ -313,6 +176,15 @@ function getRemoteStream(e){
 	remoteVideo.srcObject = e.streams[0];
 }
 
+function sendMessage(roomid, data){
+
+	console.log('send message to other end', roomid, data);
+	if(!socket){
+		console.log('socket is null');
+	}
+	socket.emit('message', roomid, data);
+}
+
 function handleOfferError(err){
 	console.error('Failed to create offer:', err);
 }
@@ -323,7 +195,6 @@ function handleAnswerError(err){
 
 function getAnswer(desc){
 	pc.setLocalDescription(desc);
-	answer.value = desc.sdp;
 
 	//send answer sdp
 	sendMessage(roomid, desc);
@@ -331,19 +202,27 @@ function getAnswer(desc){
 
 function getOffer(desc){
 	pc.setLocalDescription(desc);
-	offer.value = desc.sdp;
-	offerdesc = desc;
 
-	//send offer sdp
 	sendMessage(roomid, offerdesc);	
+}
 
+function call(){
+	
+	if(state === 'joined_conn'){
+
+		var offerOptions = {
+			offerToRecieveAudio: 1,
+			offerToRecieveVideo: 1
+		}
+
+		pc.createOffer(offerOptions)
+			.then(getOffer)
+			.catch(handleOfferError);
+	}
 }
 
 function createPeerConnection(){
 
-	//如果是多人的话，在这里要创建一个新的连接.
-	//新创建好的要放到一个map表中。
-	//key=userid, value=peerconnection
 	console.log('create RTCPeerConnection!');
 	if(!pc){
 		pc = new RTCPeerConnection(pcConfig);
@@ -367,23 +246,11 @@ function createPeerConnection(){
 		console.warning('the pc have be created!');
 	}
 
-	return;	
-}
-
-//绑定永远与 peerconnection在一起，
-//所以没必要再单独做成一个函数
-function bindTracks(){
-
 	console.log('bind tracks into RTCPeerConnection!');
-
-	if( pc === null || pc === undefined) {
-		console.error('pc is null or undefined!');
-		return;
-	}
 
 	if(localStream === null || localStream === undefined) {
 		console.error('localstream is null or undefined!');
-		return;
+		return false;
 	}
 
 	//add all track into peer connection
@@ -391,29 +258,13 @@ function bindTracks(){
 		pc.addTrack(track, localStream);	
 	});
 
+	return true;	
 }
 
-function call(){
-	
-	if(state === 'joined_conn'){
-
-		var offerOptions = {
-			offerToRecieveAudio: 1,
-			offerToRecieveVideo: 1
-		}
-
-		pc.createOffer(offerOptions)
-			.then(getOffer)
-			.catch(handleOfferError);
-	}
-}
 
 function hangup(){
 
 	if(pc) {
-
-		offerdesc = null;
-		
 		pc.close();
 		pc = null;
 	}
@@ -439,8 +290,6 @@ function leave() {
 	hangup();
 	closeLocalMedia();
 
-	offer.value = '';
-	answer.value = '';
 	btnConn.disabled = false;
 	btnLeave.disabled = true;
 }
