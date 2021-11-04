@@ -33,6 +33,43 @@ var pcConfig = {
 };
 
 
+function getOffer(desc){
+	pc.setLocalDescription(desc);
+	offer.value = desc.sdp;
+	offerdesc = desc;
+
+	//send offer sdp
+	sendMessage(roomid, offerdesc);	
+
+}
+
+
+function sendMessage(roomid, data){
+
+	console.log('send message to other end', roomid, data);
+	if(!socket){
+		console.log('socket is null');
+	}
+	socket.emit('message', roomid, data);
+}
+
+
+function call(){
+	
+	if(state === 'joined_conn'){
+
+		var offerOptions = {
+			offerToRecieveAudio: 1,
+			offerToRecieveVideo: 1
+		}
+
+		pc.createOffer(offerOptions)
+			.then(getOffer)
+			.catch(handleOfferError);
+	}
+}
+
+
 function closeLocalMedia(){
 
 	if(localStream && localStream.getTracks()){
