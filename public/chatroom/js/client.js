@@ -43,6 +43,7 @@ btnConnect.onclick = ()=>{
 		
 		console.log(data);
 		outputArea.value = outputArea.value + data + '\r';
+		outputArea.scrollTop = outputArea.scrollHeight;
 
 	});
 
