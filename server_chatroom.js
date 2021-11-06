@@ -54,11 +54,11 @@ io_sha.sockets.on('connection', (socket)=>{
 
 		console.log("有人离开，目前人数:" + (users - 1));
 		
-		//socket.leave(room);
 		//io.in(room).emit('leaved', room, socket.id);
 		socket.emit('leaved', room, socket.id);
 		//socket.broadcast.emit('leaved', room, socket.id);
 
+		socket.leave(room);
 		
 	});
 
