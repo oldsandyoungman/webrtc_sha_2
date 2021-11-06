@@ -38,19 +38,23 @@ io_sha.sockets.on('connection', (socket)=>{
 		
 		var users = Object.keys(myRoom.sockets).length;
 
+		console.log("有人加入，目前人数:" + users);
+
 		io_sha.in(room).emit('joined', room, socket.id);
 
 		//socket.broadcast.emit('joined', room, socket.id);
 
-		console.log('joined sha');
+		//console.log('joined sha');
 		
 	});	
 
 	socket.on('leave', (room)=>{
 		var myRoom = io_sha.sockets.adapter.rooms[room];
-		//var users = Object.keys(myRoom.sockets).length;
+		var users = Object.keys(myRoom.sockets).length;
+
+		console.log("有人离开，目前人数:" + (users - 1));
 		
-		socket.leave(room);
+		//socket.leave(room);
 		//io.in(room).emit('leaved', room, socket.id);
 		socket.emit('leaved', room, socket.id);
 		//socket.broadcast.emit('leaved', room, socket.id);
@@ -65,7 +69,7 @@ io_sha.sockets.on('connection', (socket)=>{
 
 		//socket.broadcast.emit('message', room, data);
 
-		console.log(data);
+		//console.log(data);
 
 		
 	});
