@@ -30,9 +30,9 @@ var lastResult;
 
 var pcConfig = {
   'iceServers': [{
-    'urls': 'turn:stun.al.learningrtc.cn:3478',
-    'credential': "mypasswd",
-    'username': "garrylea"
+    'urls': 'turn:rustling.xyz:3478',
+    'credential': "Shage@119cloud",
+    'username': "ubuntu"
   }]
 };
 
