@@ -264,7 +264,7 @@ function start(){
 
 		var constraints = {
 			video: true,
-			audio: false 
+			audio: true 
 		}
 
 		navigator.mediaDevices.getUserMedia(constraints)
