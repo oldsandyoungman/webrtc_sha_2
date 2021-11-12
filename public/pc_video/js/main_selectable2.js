@@ -268,6 +268,10 @@ function gotDevices(deviceInfos){
 
 }
 
+function handleError(err){
+	console.error('Failed to get Media Stream!', err);
+}
+
 function init_sha(){
 	if(!navigator.mediaDevices ||
 		!navigator.mediaDevices.enumerateDevices){
