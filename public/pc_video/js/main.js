@@ -1,5 +1,9 @@
 'use strict'
 
+var audioSource  = document.querySelector("select#audioSource");
+var audioOutput  = document.querySelector("select#audioOutput");
+var videoSource  = document.querySelector("select#videoSource");
+
 var localVideo = document.querySelector('video#localvideo');
 var remoteVideo = document.querySelector('video#remotevideo');
 
@@ -269,13 +273,37 @@ function shareDesk(){
 
 }
 
+
+function gotDevices(deviceInfos){
+	deviceInfos.forEach( function(deviceInfo){
+		console.log(deviceInfo.kind + ": label = "
+			+ deviceInfo.label + ": id = "
+			+ deviceInfo.deviceId + ": groupId = "
+			+ deviceInfo.groupId);
+		var option = document.createElement('option');
+		option.text = deviceInfo.label;
+		option.value = deviceInfo.deviceId;
+		if(deviceInfo.kind === 'audioinput'){
+			audioSource.appendChild(option);
+		}else if(deviceInfo.kind === 'audiooutput'){
+			audioOutput.appendChild(option);
+		}else if(deviceInfo.kind === 'videoinput'){
+			videoSource.appendChild(option);
+		}
+	});
+
+}
+
 function start(){
 
 	if(!navigator.mediaDevices ||
 		!navigator.mediaDevices.getUserMedia){
 		console.error('the getUserMedia is not supported!');
-		return;
 	}else {
+
+		navigator.mediaDevices.enumerateDevices()
+			.then(gotDevices)
+			.catch(handleError);
 
 		var constraints;
 
