@@ -249,6 +249,24 @@ function open_camera_audio(){
 
 
 function gotDevices(deviceInfos){
+
+	audioSource.options.length = 0;
+	audioOutput.options.length = 0;
+	videoSource.options.length = 0;
+
+	// var n0 = audioSource.children.length;
+	// while (n0-->0){
+	// 	audioSource.removeChild(0);
+	// }
+	// var n1 = audioOutput.children.length;
+	// while (n1-->0){
+	// 	audioOutput.removeChild(0);
+	// }
+	// var n2 = videoSource.children.length;
+	// while (n2-->0){
+	// 	videoSource.removeChild(0);
+	// }
+
 	deviceInfos.forEach( function(deviceInfo){
 		console.log(deviceInfo.kind + ": label = "
 			+ deviceInfo.label + ": id = "
@@ -287,7 +305,6 @@ function init_sha(){
 
 
 init_sha()
-
 
 videoSource.onchange = init_sha;
 
