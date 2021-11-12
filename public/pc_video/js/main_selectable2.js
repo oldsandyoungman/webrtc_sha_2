@@ -232,7 +232,13 @@ function open_camera_audio(){
 
 		}else{
 			constraints = {
-				video: true,
+				video: {
+					width: 640,
+					height: 480,
+					frameRate:15,
+					facingMode: 'enviroment',
+					deviceId : deviceId ? {exact:deviceId} : undefined
+				},
 				audio:  {
 					echoCancellation: true,
 					noiseSuppression: true,
