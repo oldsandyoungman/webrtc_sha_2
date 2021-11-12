@@ -218,6 +218,7 @@ function open_camera_audio(){
 	}else {
 
 		var constraints;
+		var deviceId = videoSource.value;
 
 		if( shareDeskBox.checked && shareDesk()){
 
