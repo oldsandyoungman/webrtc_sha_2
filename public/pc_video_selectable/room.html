@@ -8,22 +8,20 @@
 		<div>
 
 
-			<div>
-				<label>audio input device:</label>
-				<select id="audioSource"></select>
+			<div class="select">
+				<label for="audioSource">Audio input source: </label><select id="audioSource"></select>
 			</div>
-			<div>
-				<label>audio output device:</label>
-				<select id="audioOutput"></select>
+
+			<div class="select">
+				<label for="audioOutput">Audio output destination: </label><select id="audioOutput"></select>
 			</div>
-			<div>
-				<label>video input device:</label>
-				<select id="videoSource"></select>
+
+			<div class="select">
+				<label for="videoSource">Video source: </label><select id="videoSource"></select>
 			</div>
 
 			<div>
-				<button id="open_video_audio">Open video/audio</button>
-				<button id="connserver" disabled>Connect Sig Server</button>
+				<button id="connserver">Connect Sig Server</button>
 				<!--<button id="start" disabled>Start</button>
 				<button id="call" disabled>Call</button>	
 				<button id="hangup" disabled>HangUp</button>	
@@ -54,6 +52,6 @@
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 		<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-		<script src="js/main_selectable2.js"></script>
+		<script src="js/main.js"></script>
 	</body>
 </html>

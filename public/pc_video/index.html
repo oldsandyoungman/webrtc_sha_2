@@ -11,14 +11,6 @@
 					window.location.href="room.html?room="+ roomid.value;
 				}
 			}
-			function gotoNextPage_selectable(){
-				var roomid = document.querySelector('input#room');
-				if(roomid.value === null || roomid.value === ''){
-					alert('roomid is null');
-				}else {
-					window.location.href="room_selectable.html?room="+ roomid.value;
-				}
-			}
 		</script>
 	</head>
 	<body>
@@ -29,7 +21,6 @@
 			</div></td></tr>
 			<tr><td><div>
 						<button id="join" onclick="gotoNextPage()">Join</button>
-						<button id="join_selectable_device" onclick="gotoNextPage_selectable()">join_selectable_device</button>
 
 			</div></td></tr>
 		</table>
