@@ -1,9 +1,5 @@
 'use strict'
 
-var audioSource  = document.querySelector("select#audioSource");
-var audioOutput  = document.querySelector("select#audioOutput");
-var videoSource  = document.querySelector("select#videoSource");
-
 var localVideo = document.querySelector('video#localvideo');
 var remoteVideo = document.querySelector('video#remotevideo');
 
@@ -171,7 +167,7 @@ function conn(){
 
 		}
 		state = 'leaved';
-	
+
 	});
 
 	socket.on('message', (roomid, data) => {
@@ -179,11 +175,11 @@ function conn(){
 
 		if(data === null || data === undefined){
 			console.error('the message is invalid!');
-			return;	
+			return;
 		}
 
 		if(data.hasOwnProperty('type') && data.type === 'offer') {
-			
+
 			offer.value = data.sdp;
 
 			pc.setRemoteDescription(new RTCSessionDescription(data));
@@ -196,19 +192,19 @@ function conn(){
 		}else if(data.hasOwnProperty('type') && data.type == 'answer'){
 			answer.value = data.sdp;
 			pc.setRemoteDescription(new RTCSessionDescription(data));
-		
+
 		}else if (data.hasOwnProperty('type') && data.type === 'candidate'){
 			var candidate = new RTCIceCandidate({
 				sdpMLineIndex: data.label,
 				candidate: data.candidate
 			});
-			pc.addIceCandidate(candidate);	
-		
+			pc.addIceCandidate(candidate);
+
 		}else{
 			console.log('the message is invalid!', data);
-		
+
 		}
-	
+
 	});
 
 
@@ -219,7 +215,7 @@ function conn(){
 }
 
 function connSignalServer(){
-	
+
 	//开启本地视频
 	start();
 
@@ -230,11 +226,11 @@ function getMediaStream(stream){
 
 	if(localStream){
 		stream.getAudioTracks().forEach((track)=>{
-			localStream.addTrack(track);	
+			localStream.addTrack(track);
 			stream.removeTrack(track);
 		});
 	}else{
-		localStream = stream;	
+		localStream = stream;
 	}
 
 	localVideo.srcObject = localStream;
@@ -273,37 +269,13 @@ function shareDesk(){
 
 }
 
-
-function gotDevices(deviceInfos){
-	deviceInfos.forEach( function(deviceInfo){
-		console.log(deviceInfo.kind + ": label = "
-			+ deviceInfo.label + ": id = "
-			+ deviceInfo.deviceId + ": groupId = "
-			+ deviceInfo.groupId);
-		var option = document.createElement('option');
-		option.text = deviceInfo.label;
-		option.value = deviceInfo.deviceId;
-		if(deviceInfo.kind === 'audioinput'){
-			audioSource.appendChild(option);
-		}else if(deviceInfo.kind === 'audiooutput'){
-			audioOutput.appendChild(option);
-		}else if(deviceInfo.kind === 'videoinput'){
-			videoSource.appendChild(option);
-		}
-	});
-
-}
-
 function start(){
 
 	if(!navigator.mediaDevices ||
 		!navigator.mediaDevices.getUserMedia){
 		console.error('the getUserMedia is not supported!');
+		return;
 	}else {
-
-		navigator.mediaDevices.enumerateDevices()
-			.then(gotDevices)
-			.catch(handleError);
 
 		var constraints;
 
