@@ -10,6 +10,7 @@ const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
 var localVideo = document.querySelector('video#localvideo');
 var remoteVideo = document.querySelector('video#remotevideo');
 
+var btnRefresh =  document.querySelector('button#refresh_device');
 var btnConn =  document.querySelector('button#connserver');
 var btnLeave = document.querySelector('button#leave');
 
@@ -491,6 +492,9 @@ function attachSinkId(element, sinkId) {
 function changeAudioDestination() {
 	const audioDestination = audioOutputSelect.value;
 	attachSinkId(localVideo, audioDestination);
+
+	navigator.mediaDevices.enumerateDevices().then(init)
+
 }
 
 
@@ -504,6 +508,6 @@ audioOutputSelect.onchange = changeAudioDestination;
 videoSelect.onchange = start;
 
 
-
+btnRefresh.onclick = navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError)
 btnConn.onclick = connSignalServer
 btnLeave.onclick = leave;
