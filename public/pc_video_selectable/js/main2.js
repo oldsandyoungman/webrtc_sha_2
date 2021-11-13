@@ -363,6 +363,27 @@ function connSignalServer(){
 
 
 
+function leave() {
+
+	if(socket){
+		socket.emit('leave', roomid); //notify server
+	}
+
+	hangup();
+	closeLocalMedia();
+
+	// offer.value = '';
+	// answer.value = '';
+	btnConn.disabled = false;
+	btnLeave.disabled = true;
+}
+
+
+
+
+
+
+
 
 
 
@@ -415,6 +436,11 @@ function gotStream(stream) {
 }
 
 function start() {
+
+	if (btnConn.disabled === true){
+		leave();
+	}
+
 	if (localStream) {
 		localStream.getTracks().forEach(track => {
 			track.stop();
