@@ -438,10 +438,12 @@ function gotStream(stream) {
 
 function start() {
 
+	// localStream = null;
+	// localVideo.srcObject = null;
+
 	if (btnConn.disabled === true){
 		leave();
-		localStream = null;
-		localVideo.srcObject = null;
+
 	}
 
 	if (localStream) {
