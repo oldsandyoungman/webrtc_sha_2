@@ -497,6 +497,10 @@ function changeAudioDestination() {
 
 }
 
+function func_refresh(){
+	navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+}
+
 
 
 navigator.mediaDevices.enumerateDevices().then(init).catch(handleError);
@@ -508,6 +512,6 @@ audioOutputSelect.onchange = changeAudioDestination;
 videoSelect.onchange = start;
 
 
-btnRefresh.onclick = navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError)
+btnRefresh.onclick = func_refresh
 btnConn.onclick = connSignalServer
 btnLeave.onclick = leave;
