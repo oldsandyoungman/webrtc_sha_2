@@ -121,6 +121,11 @@ function closeLocalMedia(){
 }
 
 
+function getRemoteStream(e){
+	remoteStream = e.streams[0];
+	remoteVideo.srcObject = e.streams[0];
+}
+
 function handleOfferError(err){
 	console.error('Failed to create offer:', err);
 }
@@ -266,7 +271,7 @@ function conn(){
 				.then(getAnswer)
 				.catch(handleAnswerError);
 
-		}else if(data.hasOwnProperty('type') && data.type == 'answer'){
+		}else if(data.hasOwnProperty('type') && data.type === 'answer'){
 			// answer.value = data.sdp;
 			pc.setRemoteDescription(new RTCSessionDescription(data));
 
