@@ -440,6 +440,8 @@ function start() {
 
 	if (btnConn.disabled === true){
 		leave();
+		localStream = null;
+		localVideo.srcObject = null;
 	}
 
 	if (localStream) {
