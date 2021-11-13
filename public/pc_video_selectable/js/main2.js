@@ -493,7 +493,7 @@ function changeAudioDestination() {
 	const audioDestination = audioOutputSelect.value;
 	attachSinkId(localVideo, audioDestination);
 
-	navigator.mediaDevices.enumerateDevices().then(init)
+	navigator.mediaDevices.enumerateDevices().then(gotDevices)
 
 }
 
