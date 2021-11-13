@@ -12,7 +12,6 @@ audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
 
 
-
 var localVideo = document.querySelector('video#localvideo');
 var remoteVideo = document.querySelector('video#remotevideo');
 
@@ -31,6 +30,8 @@ var pcConfig = {
     'username': "ubuntu"
   }]
 };
+
+var constraints = null;
 
 var localStream = null;
 var remoteStream = null;
@@ -230,16 +231,16 @@ function conn(){
 
 function getMediaStream(stream){
 
-	if(localStream){
-		stream.getAudioTracks().forEach((track)=>{
-			localStream.addTrack(track);
-			stream.removeTrack(track);
-		});
-	}else{
-		localStream = stream;
-	}
-
-	localVideo.srcObject = localStream;
+	// if(localStream){
+	// 	stream.getAudioTracks().forEach((track)=>{
+	// 		localStream.addTrack(track);
+	// 		stream.removeTrack(track);
+	// 	});
+	// }else{
+	// 	localStream = stream;
+	// }
+	//
+	// localVideo.srcObject = localStream;
 
 	//这个函数的位置特别重要，
 	//一定要放到getMediaStream之后再调用
@@ -283,28 +284,18 @@ function connSignalServer(){
 		return;
 	}else {
 
-		var constraints;
-
 		if( shareDeskBox.checked && shareDesk()){
 
 			constraints = {
 				video: false,
 				audio:  {
+					deviceId: audioSource ? {exact: audioSource} : undefined,
 					echoCancellation: true,
 					noiseSuppression: true,
 					autoGainControl: true
 				}
 			}
 
-		}else{
-			constraints = {
-				video: true,
-				audio:  {
-					echoCancellation: true,
-					noiseSuppression: true,
-					autoGainControl: true
-				}
-			}
 		}
 
 		navigator.mediaDevices.getUserMedia(constraints)
@@ -510,13 +501,13 @@ function attachSinkId(element, sinkId) {
 
 function changeAudioDestination() {
 	const audioDestination = audioOutputSelect.value;
-	attachSinkId(videoElement, audioDestination);
+	attachSinkId(localVideo, audioDestination);
 }
 
 
 function gotStream(stream) {
 	window.stream = stream; // make stream available to console
-	videoElement.srcObject = stream;
+	localVideo.srcObject = stream;
 	// Refresh button list in case labels have become available
 	return navigator.mediaDevices.enumerateDevices();
 }
@@ -530,9 +521,16 @@ function start() {
 	}
 	const audioSource = audioInputSelect.value;
 	const videoSource = videoSelect.value;
-	const constraints = {
-		audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
-		video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+	constraints = {
+		audio: {
+			echoCancellation: true,
+			noiseSuppression: true,
+			autoGainControl: true,
+			deviceId: audioSource ? {exact: audioSource} : undefined
+		},
+		video: {
+			deviceId: videoSource ? {exact: videoSource} : undefined
+		}
 	};
 	navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
 }
