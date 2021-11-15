@@ -22,13 +22,28 @@ var btnLeave = document.querySelector('button#leave');
 
 audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
+
+
 var pc = null;
+
+var constraints = null;
 
 var remoteStream = null;
 
+var roomid;
+var socket = null;
+
+var offerdesc = null;
+var state = 'init';
 
 
-
+var pcConfig = {
+	'iceServers': [{
+		'urls': 'turn:rustling.xyz:3478',
+		'credential': "Shage@119cloud",
+		'username': "ubuntu"
+	}]
+};
 
 
 
