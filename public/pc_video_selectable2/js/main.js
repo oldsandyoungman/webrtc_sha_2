@@ -299,6 +299,14 @@ function getOffer(desc){
 
 }
 
+function getAnswer(desc){
+	pc.setLocalDescription(desc);
+	// answer.value = desc.sdp;
+
+	//send answer sdp
+	sendMessage(roomid, desc);
+}
+
 function hangup(){
 
 	if(pc) {
