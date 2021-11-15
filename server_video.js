@@ -62,6 +62,7 @@ io.sockets.on('connection', (socket)=> {
 		var myRoom = io.sockets.adapter.rooms[room]; 
 		var users = (myRoom)? Object.keys(myRoom.sockets).length : 0;
 		logger.debug('the user number of room is: ' + users);
+		console.log('the user number of room is: ' + users);
 
 		if(users < USERCOUNT){
 			socket.emit('joined', room, socket.id); //发给除自己之外的房间内的所有人
@@ -82,11 +83,13 @@ io.sockets.on('connection', (socket)=> {
 		var myRoom = io.sockets.adapter.rooms[room]; 
 		var users = (myRoom)? Object.keys(myRoom.sockets).length : 0;
 		logger.debug('the user number of room is: ' + (users-1));
+		console.log('the user number of room is: ' + (users-1));
 		//socket.emit('leaved', room, socket.id);
 		//socket.broadcast.emit('leaved', room, socket.id);
 		socket.to(room).emit('bye', room, socket.id);
 		socket.emit('leaved', room, socket.id);
 		//io.in(room).emit('leaved', room, socket.id);
+		socket.leave(room);
 	});
 
 });
