@@ -281,6 +281,48 @@ function getAnswer(desc){
 
 
 
+function leave() {
+
+	if(socket){
+		socket.emit('leave', roomid); //notify server
+	}
+
+	hangup();
+	closeLocalMedia();
+
+	// offer.value = '';
+	// answer.value = '';
+	btnConn.disabled = false;
+	btnLeave.disabled = true;
+}
+
+function hangup(){
+
+	if(pc) {
+
+		offerdesc = null;
+		pc.close();
+		pc = null;
+	}
+
+}
+
+function closeLocalMedia(){
+
+	if(localStream && localStream.getTracks()){
+		localStream.getTracks().forEach((track)=>{
+			track.stop();
+		});
+	}
+	localStream = null;
+}
+
+
+
+
+
+
+
 
 
 
@@ -395,11 +437,11 @@ start();
 
 
 
-audioInputSelect.onchange = start;
-audioOutputSelect.onchange = changeAudioDestination;
-videoSelect.onchange = start;
+// audioInputSelect.onchange = start;
+// audioOutputSelect.onchange = changeAudioDestination;
+// videoSelect.onchange = start;
 
 
-btnRefresh.onclick = func_refresh
+// btnRefresh.onclick = func_refresh
 btnConn.onclick = conn
 btnLeave.onclick = leave;
