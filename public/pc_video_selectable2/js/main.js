@@ -458,6 +458,13 @@ function start() {
 }
 
 
+function refresh(){
+
+	navigator.mediaDevices.enumerateDevices()
+		.then(gotDevices)
+		.catch(handleError);
+
+}
 
 
 
@@ -477,7 +484,7 @@ start();
 
 
 
-btnRefresh.onclick = navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+btnRefresh.onclick = refresh;
 btnConn.onclick = connSignalServer;
 btnLeave.onclick = leave;
 
