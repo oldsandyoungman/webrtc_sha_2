@@ -85,6 +85,10 @@ function handleAnswerError(err){
 
 function connSignalServer(){
 
+	if (window.stream === null){
+		start();
+	}
+
 	conn();
 
 }
