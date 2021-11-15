@@ -69,6 +69,22 @@ function sendMessage(roomid, data){
 	socket.emit('message', roomid, data);
 }
 
+
+
+
+
+
+
+function connSignalServer(){
+
+	if (localStream==null){
+		start();
+	}
+	conn();
+
+}
+
+
 function conn(){
 
 	socket = io.connect();
@@ -443,5 +459,5 @@ start();
 
 
 // btnRefresh.onclick = func_refresh
-btnConn.onclick = conn
+btnConn.onclick = connSignalServer
 btnLeave.onclick = leave;
