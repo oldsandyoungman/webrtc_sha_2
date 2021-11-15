@@ -443,6 +443,8 @@ function start() {
 
 	if (btnConn.disabled === true){
 		leave();
+		btnConn.disabled = true;
+		btnLeave.disabled = false;
 	}
 
 	if (localStream) {
@@ -464,6 +466,12 @@ function start() {
 		}
 	};
 	navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+
+	if (btnConn.disabled === true){
+		conn();
+	}
+
+
 }
 
 
