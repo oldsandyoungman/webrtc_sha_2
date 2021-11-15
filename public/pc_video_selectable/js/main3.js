@@ -429,7 +429,10 @@ function start() {
 
 	}else {
 
-		navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+		navigator.mediaDevices.getUserMedia(constraints)
+			.then(gotStream)
+			.then(gotDevices)
+			.catch(handleError);
 
 	}
 	// if (btnConn.disabled === true){
