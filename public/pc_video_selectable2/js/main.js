@@ -29,7 +29,6 @@ var pc = null;
 
 var constraints = null;
 
-var localStream = null;
 var remoteStream = null;
 
 var roomid;
