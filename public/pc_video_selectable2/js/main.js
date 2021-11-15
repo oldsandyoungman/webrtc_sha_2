@@ -87,7 +87,7 @@ function handleAnswerError(err){
 
 function connSignalServer(){
 
-	if (localStream === null){
+	if (window.stream === null){
 		start();
 	}
 
@@ -263,14 +263,14 @@ function bindTracks(){
 		return;
 	}
 
-	if(localStream === null || localStream === undefined) {
-		console.error('localStream is null or undefined!');
+	if(window.stream === null || window.stream === undefined) {
+		console.error('window.stream is null or undefined!');
 		return;
 	}
 
 	//add all track into peer connection
-	localStream.getTracks().forEach((track)=>{
-		pc.addTrack(track, localStream);
+	window.stream.getTracks().forEach((track)=>{
+		pc.addTrack(track, window.stream);
 	});
 
 }
@@ -327,12 +327,12 @@ function hangup(){
 
 function closeLocalMedia(){
 
-	if(localStream && localStream.getTracks()){
-		localStream.getTracks().forEach((track)=>{
+	if(window.stream && window.stream.getTracks()){
+		window.stream.getTracks().forEach((track)=>{
 			track.stop();
 		});
 	}
-	localStream = null;
+	window.stream = null;
 }
 
 function leave() {
@@ -430,7 +430,7 @@ function changeAudioDestination() {
 }
 
 function gotStream(stream) {
-	localStream = stream; // make stream available to console
+	window.stream = stream; // make stream available to console
 	localVideo.srcObject = stream;
 	// Refresh button list in case labels have become available
 	return navigator.mediaDevices.enumerateDevices();
@@ -441,8 +441,8 @@ function handleError(error) {
 }
 
 function start() {
-	if (localStream) {
-		localStream.getTracks().forEach(track => {
+	if (window.stream) {
+		window.stream.getTracks().forEach(track => {
 			track.stop();
 		});
 	}
