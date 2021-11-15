@@ -403,11 +403,11 @@ function start() {
 	// 	btnLeave.disabled = false;
 	// }
 
-	// if (localStream) {
-	// 	localStream.getTracks().forEach(track => {
-	// 		track.stop();
-	// 	});
-	// }
+	if (localStream) {
+		localStream.getTracks().forEach(track => {
+			track.stop();
+		});
+	}
 
 	const audioSource = audioInputSelect.value;
 	const videoSource = videoSelect.value;
@@ -445,7 +445,7 @@ function start() {
 
 function change_device(){
 
-	closeLocalMedia();
+	// closeLocalMedia();
 
 	start();
 
