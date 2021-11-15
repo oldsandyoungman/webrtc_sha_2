@@ -329,6 +329,21 @@ function closeLocalMedia(){
 	window.stream = null;
 }
 
+function leave() {
+
+	if(socket){
+		socket.emit('leave', roomid); //notify server
+	}
+
+	hangup();
+	closeLocalMedia();
+
+	// offer.value = '';
+	// answer.value = '';
+	btnConn.disabled = false;
+	btnLeave.disabled = true;
+}
+
 
 
 
@@ -452,3 +467,5 @@ start();
 
 
 btnConn.onclick = connSignalServer
+btnLeave.onclick = leave;
+
