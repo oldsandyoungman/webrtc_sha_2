@@ -304,7 +304,7 @@ function leave() {
 	}
 
 	hangup();
-	closeLocalMedia();
+	// closeLocalMedia();
 
 	// offer.value = '';
 	// answer.value = '';
