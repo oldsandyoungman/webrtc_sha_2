@@ -20,7 +20,7 @@ var remoteVideo = document.querySelector('video#remotevideo');
 var btnConn =  document.querySelector('button#connserver');
 var btnLeave = document.querySelector('button#leave');
 
-audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
+// audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
 
 
