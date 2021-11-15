@@ -440,6 +440,16 @@ function start() {
 }
 
 
+function change_device(){
+
+	start();
+
+
+
+
+}
+
+
 // function init(deviceInfos) {
 // 	gotDevices(deviceInfos);
 // 	start();
@@ -455,7 +465,7 @@ start();
 
 // audioInputSelect.onchange = start;
 // audioOutputSelect.onchange = changeAudioDestination;
-// videoSelect.onchange = start;
+videoSelect.onchange = change_device;
 
 
 // btnRefresh.onclick = func_refresh
