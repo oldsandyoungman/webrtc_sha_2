@@ -445,6 +445,8 @@ function start() {
 
 function change_device(){
 
+	closeLocalMedia();
+
 	start();
 
 
