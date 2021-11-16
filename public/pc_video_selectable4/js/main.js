@@ -596,7 +596,8 @@ function changeAudioDestination(event) {
 	const deviceId = event.target.value;
 	const outputSelector = event.target;
 	// FIXME: Make the media element lookup dynamic.
-	const element = event.path[0];
+	// const element = event.path[0];
+	const element = localVideo;
 	attachSinkId(element, deviceId, outputSelector);
 }
 
