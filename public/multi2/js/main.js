@@ -498,6 +498,13 @@ function refresh(){
 }
 
 function gotDevices(deviceInfos) {
+
+	selectors.forEach(select => {
+		while (select.firstChild) {
+			select.removeChild(select.firstChild);
+		}
+	});
+
 	const masterOutputSelector = document.createElement('select');
 
 	for (let i = 0; i !== deviceInfos.length; ++i) {
