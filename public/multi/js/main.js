@@ -644,7 +644,7 @@ function changeAudioDestination(event) {
 //   navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleError);
 // }
 
-start();
+// start();
 
 function handleError(error) {
   console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
