@@ -533,8 +533,13 @@ function gotDevices(deviceInfos) {
 	for (let selector = 0; selector < allOutputSelectors.length; selector++) {
 		const newOutputSelector = masterOutputSelector.cloneNode(true);
 		newOutputSelector.addEventListener('change', changeAudioDestination);
-		allOutputSelectors[selector].parentNode.replaceChild(newOutputSelector,
-			allOutputSelectors[selector]);
+
+		if (allOutputSelectors[selector].id === 'audioOutput'){
+			allOutputSelectors[selector].parentNode.replaceChild(newOutputSelector,
+				allOutputSelectors[selector]);
+		}
+
+
 	}
 }
 
