@@ -360,7 +360,7 @@ function start(){
 
     navigator.mediaDevices.getUserMedia(constraints)
         .then(getMediaStream)
-        .catch(handleError);
+        .catch(handleError111);
   }
 
 }
@@ -648,6 +648,10 @@ function changeAudioDestination(event) {
 
 function handleError(error) {
   console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
+}
+
+function handleError111(error) {
+  console.log('navigator.MediaDevices.getUserMedia error111: ', error.message, error.name);
 }
 
 
