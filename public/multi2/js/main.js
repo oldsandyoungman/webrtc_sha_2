@@ -17,8 +17,8 @@ var remoteVideo = document.querySelector('video#remotevideo');
 var btnConn =  document.querySelector('button#connserver');
 var btnLeave = document.querySelector('button#leave');
 
-var offer = document.querySelector('textarea#offer');
-var answer = document.querySelector('textarea#answer');
+
+
 
 var shareDeskBox  = document.querySelector('input#shareDesk');
 
@@ -166,8 +166,7 @@ function conn(){
 		//一个key:value的格式，key=userid, value=peerconnection
 		state = 'joined_unbind';
 		hangup();
-		offer.value = '';
-		answer.value = '';
+
 		console.log('receive bye message, state=', state);
 	});
 
@@ -192,8 +191,6 @@ function conn(){
 
 		if(data.hasOwnProperty('type') && data.type === 'offer') {
 
-			offer.value = data.sdp;
-
 			pc.setRemoteDescription(new RTCSessionDescription(data));
 
 			//create answer
@@ -202,7 +199,7 @@ function conn(){
 				.catch(handleAnswerError);
 
 		}else if(data.hasOwnProperty('type') && data.type == 'answer'){
-			answer.value = data.sdp;
+
 			pc.setRemoteDescription(new RTCSessionDescription(data));
 
 		}else if (data.hasOwnProperty('type') && data.type === 'candidate'){
@@ -344,7 +341,6 @@ function handleAnswerError(err){
 
 function getAnswer(desc){
 	pc.setLocalDescription(desc);
-	answer.value = desc.sdp;
 
 	//send answer sdp
 	sendMessage(roomid, desc);
@@ -352,7 +348,7 @@ function getAnswer(desc){
 
 function getOffer(desc){
 	pc.setLocalDescription(desc);
-	offer.value = desc.sdp;
+
 	offerdesc = desc;
 
 	//send offer sdp
@@ -460,8 +456,7 @@ function leave() {
 	hangup();
 	closeLocalMedia();
 
-	offer.value = '';
-	answer.value = '';
+
 	btnConn.disabled = false;
 	btnLeave.disabled = true;
 }
