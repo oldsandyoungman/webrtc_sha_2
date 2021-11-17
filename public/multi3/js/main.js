@@ -534,7 +534,7 @@ function gotDevices(deviceInfos) {
 		const newOutputSelector = masterOutputSelector.cloneNode(true);
 		newOutputSelector.addEventListener('change', changeAudioDestination);
 
-		if (allOutputSelectors[selector].id === 'audioOutput'){
+		if (allOutputSelectors[selector].id !== 'audioSource' && allOutputSelectors[selector].id !== 'videoSource'){
 			allOutputSelectors[selector].parentNode.replaceChild(newOutputSelector,
 				allOutputSelectors[selector]);
 		}
