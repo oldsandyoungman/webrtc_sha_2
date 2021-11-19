@@ -6,25 +6,6 @@
  *  tree.
  */
 
-div.progress, div#bitrate {
-  margin: 0 0 1em 0;
-}
-
-div.progress div.label {
-  display: inline-block;
-  font-weight: 400;
-  width: 10em;
-}
-
-form {
-  margin: 0 0 1em 0;
-  white-space: nowrap;
-}
-
-progress {
-  width: calc(100% - 8.5em);
-}
-
 button {
   margin: 10px 20px 25px 0;
   vertical-align: top;
@@ -35,22 +16,11 @@ table {
   margin: 200px (50% - 100) 0 0; 
 }
 
-textarea#chat {
+textarea {
   color: #444;
   font-size: 0.9em;
   font-weight: 300;
-  height: 325px; 
-  margin: 5px;
-  padding: 5px;
-  width: calc(100% - 10px);
-}
-
-textarea#sendtxt {
-  color: #444;
-  font-size: 0.9em;
-  font-weight: 300;
-  height: 125px; 
-  margin: 5px;
+  height: 20.0em;
   padding: 5px;
   width: calc(100% - 10px);
 }
@@ -83,28 +53,16 @@ div.output {
   width: 270px;
 }
 
-div.label {
-	display: inline-block;
-	font-weight: 400;
-	width: 120px;
-}
-
-div.graph-container {
-  background-color: #ccc;
-  float: left;
-  margin: 10px;
-}
-
-div.preview {
+div#preview {
   border-bottom: 1px solid #eee;
   margin: 0 0 1em 0;
   padding: 0 0 0.5em 0;
 }
 
-div.preview > div {
+div#preview > div {
   display: inline-block;
   vertical-align: top;
-  width: calc(50% - 40px);
+  width: calc(50% - 12px);
 }
 
 section#statistics div {

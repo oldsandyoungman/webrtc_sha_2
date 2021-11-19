@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--
+ *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree.
+-->
+<html>
+
+<head>
+	<title>WebRTC PeerConnection</title>
+	<link href="./css/main.css" rel="stylesheet" />
+</head>
+
+<body>
+
+<div id="container">
+
+	<div id="sources">
+
+		<div>
+			<button id="refresh_device">Refresh device</button>
+			<button id="connserver">Connect Sig Server</button>
+			<!--<button id="start" disabled>Start</button>
+            <button id="call" disabled>Call</button>
+            <button id="hangup" disabled>HangUp</button>
+            -->
+			<button id="leave" disabled>Leave</button>
+		</div>
+
+		<div>
+			<input id="shareDesk" type="checkbox"/><label for="shareDesk">Share Desktop</label>
+		</div>
+
+
+		<!--        <div>-->
+		<!--            <h2>getUserMedia():</h2>-->
+		<!--            <div>-->
+		<!--                <video class="gum" title="audio and video stream from getUserMedia()" playsinline autoplay controls></video>-->
+		<!--                <div class="outputSelector">-->
+		<!--                    <label>Select audio output: </label>-->
+		<!--                    <select></select>-->
+		<!--                </div>-->
+		<!--            </div>-->
+		<!--            <div>-->
+		<!--                <audio class="gum" title="audio stream from getUserMedia()" controls></audio>-->
+		<!--                <div class="outputSelector">-->
+		<!--                    <label>Select audio output: </label>-->
+		<!--                    <select></select>-->
+		<!--                </div>-->
+		<!--            </div>-->
+		<!--        </div>-->
+		<div>
+			<h2>Local:</h2>
+			<div>
+				<video id="localvideo" autoplay playsinline muted></video>
+				<!--                <video title="local video file" playsinline controls loop poster="images/poster.jpg" preload="metadata">-->
+				<!--                    <source src="video/chrome.webm" type="video/webm"/>-->
+				<!--                    <source src="video/chrome.mp4" type="video/mp4"/>-->
+				<!--                    <p>This browser does not support the video element.</p>-->
+				<!--                </video>-->
+				<!--                <div class="outputSelector">-->
+				<!--                    <label>Select audio output: </label>-->
+				<!--                    <select></select>-->
+				<!--                </div>-->
+
+				<div class="select">
+					<label for="audioSource">Audio input source: </label>
+					<select id="audioSource"></select>
+				</div>
+
+				<!--                <div class="select">-->
+				<!--                    <label for="audioOutput">Audio output destination: </label>-->
+				<!--                    <select id="audioOutput"></select>-->
+				<!--                </div>-->
+
+				<div class="select">
+					<label for="videoSource">Video source: </label>
+					<select id="videoSource"></select>
+				</div>
+			</div>
+		</div>
+		<div>
+			<h2>Remote:</h2>
+			<div>
+
+				<video id="remotevideo" autoplay playsinline></video>
+				<!--                <video title="local video file" playsinline controls loop poster="images/poster.jpg" preload="metadata">-->
+				<!--                    <source src="video/chrome.webm" type="video/webm"/>-->
+				<!--                    <source src="video/chrome.mp4" type="video/mp4"/>-->
+				<!--                    <p>This browser does not support the video element.</p>-->
+				<!--                </video>-->
+				<div class="outputSelector">
+					<label>Select audio output: </label>
+					<label for="audioOutput"></label>
+					<select id="audioOutput"></select>
+				</div>
+			</div>
+			<!--            <div>-->
+			<!--                <audio title="local audio file" controls loop>-->
+			<!--                    <source src="audio/audio.mp3" type="audio/mp3"/>-->
+			<!--                    This browser does not support the audio element.-->
+			<!--                </audio>-->
+			<!--                <div class="outputSelector">-->
+			<!--                    <label>Select audio output: </label>-->
+			<!--                    <select></select>-->
+			<!--                </div>-->
+			<!--            </div>-->
+		</div>
+
+
+		<div >
+			<form id="fileInfo">
+				<input type="file" id="fileInput" name="files" disabled />
+			</form>
+			<button disabled id="sendFile">Send</button>
+			<button disabled id="abortButton">Abort</button>
+		</div>
+
+		<div class="progress">
+			<div class="label">Send progress: </div>
+			<progress id="sendProgress" max="0" value="0"></progress>
+		</div>
+
+		<div class="progress">
+			<div class="label">Receive progress: </div>
+			<progress id="receiveProgress" max="0" value="0"></progress>
+		</div>
+
+	</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
