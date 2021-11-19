@@ -20,6 +20,9 @@ var btnLeave = document.querySelector('button#leave');
 const btnSendFile = document.querySelector('button#sendFile');
 const btnAbort = document.querySelector('button#abortButton');
 
+const statusMessage = document.querySelector('span#status');
+const downloadAnchor = document.querySelector('a#download');
+
 
 
 
